@@ -13,6 +13,9 @@ export type Volunteer = {
   drives: boolean;
 };
 
+// A volunteer who is one of the personas; the role switch offers these
+export type DemoUser = Volunteer & { personaId: PersonaId };
+
 export type ShiftType = 'morning' | 'evening' | 'adoptionVisit' | 'vetTrip';
 
 export type Task = {
