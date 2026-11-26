@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import BigButton from '../components/BigButton';
 import DayHeading from '../components/DayHeading';
 import ShiftCard from '../components/ShiftCard';
@@ -18,7 +18,7 @@ import {
   shiftsNeedingPeople,
   shiftsOfWeek,
 } from '../logic/shifts';
-import { colors, fontSize, spacing } from '../theme';
+import { colors, fontSize, largeTextScale, spacing } from '../theme';
 import { DemoUser, Shift } from '../types';
 
 // How many days after TODAY the coordinator summary looks ahead (R7)
@@ -40,12 +40,12 @@ export default function ShiftListScreen({ shifts, currentUser, onSignUp, onTakeS
         Shift list
       </Text>
 
-      {/* UI-9 → R7 */}
+      {/* UI-9 → R7, R13 */}
       {currentUser.role === 'coordinator' && (
         <CoordinatorSummary shifts={shifts} currentUser={currentUser} />
       )}
 
-      {/* UI-3 → R1 */}
+      {/* UI-3 → R1, R13 */}
       {days.map((day) => (
         <View key={day.date} style={styles.day}>
           <DayHeading date={day.date} />
@@ -68,14 +68,15 @@ export default function ShiftListScreen({ shifts, currentUser, onSignUp, onTakeS
 // R7: the shifts from TODAY to TODAY + 2 days that need people
 function CoordinatorSummary({ shifts, currentUser }: { shifts: Shift[]; currentUser: DemoUser }) {
   const needing = shiftsNeedingPeople(shifts, TODAY, LOOK_AHEAD_DAYS);
-  const lastDay = weekdayName(addDays(TODAY, LOOK_AHEAD_DAYS));
+  const shortDates = useWindowDimensions().fontScale >= largeTextScale; // R13
+  const lastDay = weekdayName(addDays(TODAY, LOOK_AHEAD_DAYS), shortDates);
 
   return (
     <View style={styles.summary}>
       <Text style={styles.summaryTitle}>{needPeopleSummary(needing.length, lastDay)}</Text>
       {needing.map((shift) => (
         <Text key={shift.id} style={styles.text}>
-          • {formatDay(shift.date)}, {SHIFT_TYPE_LABELS[shift.type]} {shift.start}–{shift.end}:{' '}
+          • {formatDay(shift.date, shortDates)}, {SHIFT_TYPE_LABELS[shift.type]} {shift.start}–{shift.end}:{' '}
           {statusLabel(
             getShiftStatus(shift, currentUser.id),
             shift.volunteerIds.length,

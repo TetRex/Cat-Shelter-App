@@ -17,12 +17,19 @@ export function addDays(date: string, days: number): string {
   return result.toISOString().slice(0, 10);
 }
 
-export function weekdayName(date: string): string {
-  return WEEKDAYS[toDate(date).getUTCDay()];
+// For example 'Wednesday', or 'Wed' when `short` is true
+export function weekdayName(date: string, short = false): string {
+  const weekday = WEEKDAYS[toDate(date).getUTCDay()];
+  return short ? weekday.slice(0, 3) : weekday;
 }
 
-// For example 'Tuesday 1 December'
-export function formatDay(date: string): string {
+// For example 'Tuesday 1 December', or 'Tue 1 Dec' when `short` is true
+export function formatDay(date: string, short = false): string {
   const day = toDate(date);
-  return `${WEEKDAYS[day.getUTCDay()]} ${day.getUTCDate()} ${MONTHS[day.getUTCMonth()]}`;
+  const weekday = WEEKDAYS[day.getUTCDay()];
+  const month = MONTHS[day.getUTCMonth()];
+  if (short) {
+    return `${weekday.slice(0, 3)} ${day.getUTCDate()} ${month.slice(0, 3)}`;
+  }
+  return `${weekday} ${day.getUTCDate()} ${month}`;
 }

@@ -88,6 +88,7 @@ export default function ShiftCard({ shift, currentUser, children }: Props) {
                 return (
                   <View key={catId}>
                     <Text style={styles.bold}>{cat.name}</Text>
+                    {cat.notes.length === 0 && <Text style={styles.text}>{LABELS.noNotes}</Text>}
                     {cat.notes.map((note) => (
                       <Text key={note} style={styles.text}>
                         {note}

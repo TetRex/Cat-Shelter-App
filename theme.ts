@@ -32,6 +32,10 @@ export const colors = {
 // Every touch target is at least 48×48 dp (P3)
 export const touchTarget = 48;
 
+// From this system font scale up, dates use the short form ('Wed 2 Dec'),
+// because a long word like 'Wednesday' no longer fits on one line (R13)
+export const largeTextScale = 2;
+
 // Space kept free for the phone's status bar (top) and system navigation (bottom).
 // Set by hand because the app uses no safe-area library:
 // Android reports its status bar height; iOS values cover phones with a notch and a home indicator.
