@@ -1,4 +1,4 @@
-// Provisional: revise after docs/requirements.md
+// Data types, revised against docs/requirements.md in Phase 3
 
 export type PersonaId = 'P1' | 'P2' | 'P3' | 'P4' | 'P5';
 
@@ -10,7 +10,6 @@ export type Volunteer = {
   personaId?: PersonaId; // only the five demo users have a persona
   role: Role;
   canGiveMedication: boolean;
-  drives: boolean;
 };
 
 // A volunteer who is one of the personas; the role switch offers these
