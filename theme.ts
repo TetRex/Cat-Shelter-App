@@ -3,6 +3,7 @@ import { Platform, StatusBar } from 'react-native';
 // All font sizes in the app come from here. Base body size is at least 18 (P3).
 export const fontSize = {
   body: 18,
+  heading: 22,
   title: 28,
 };
 
@@ -19,6 +20,13 @@ export const colors = {
   primary: '#1F5FAD',
   onPrimary: '#FFFFFF',
   demoBanner: '#FFF3C4',
+  notice: '#FDECEA',
+  // Status colours are only added on top of a text label (R14)
+  statusYours: '#1F5FAD',
+  statusFull: '#2E7D32',
+  statusPartlyFilled: '#B26A00',
+  statusFree: '#B3261E',
+  statusSwap: '#6A1B9A',
 };
 
 // Every touch target is at least 48×48 dp (P3)
