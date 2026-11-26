@@ -54,4 +54,5 @@ export type Shift = {
   taskIds: string[];
   catIds: string[];
   vetTrip?: VetTrip; // only for type 'vetTrip'
+  swapOfferedBy?: string; // id of the volunteer who offered this shift for a swap (R8)
 };
