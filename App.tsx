@@ -5,7 +5,7 @@ import BigButton from './components/BigButton';
 import RoleSwitcher from './components/RoleSwitcher';
 import { DEMO_USERS } from './data/demo';
 import { SHIFTS } from './data/shifts';
-import { signUp, takeSwap } from './logic/shifts';
+import { offerSwap, signUp, takeSwap } from './logic/shifts';
 import CatsScreen from './screens/CatsScreen';
 import MyShiftsScreen from './screens/MyShiftsScreen';
 import ShiftListScreen from './screens/ShiftListScreen';
@@ -53,7 +53,13 @@ export default function App() {
               onTakeSwap={(shiftId) => setShifts(takeSwap(shifts, shiftId, currentUser.id))}
             />
           )}
-          {screen === 'myShifts' && <MyShiftsScreen />}
+          {screen === 'myShifts' && (
+            <MyShiftsScreen
+              shifts={shifts}
+              currentUser={currentUser}
+              onOfferSwap={(shiftId) => setShifts(offerSwap(shifts, shiftId, currentUser.id))}
+            />
+          )}
           {screen === 'cats' && <CatsScreen />}
         </View>
       </ScrollView>
