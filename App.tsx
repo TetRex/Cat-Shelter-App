@@ -24,10 +24,10 @@ export default function App() {
   return (
     <View style={styles.root}>
       <ScrollView contentContainerStyle={styles.content}>
-        {/* UI-? → TODO */}
+        {/* UI-1 → R15 */}
         <RoleSwitcher currentUser={currentUser} onChange={setCurrentUser} />
 
-        {/* UI-? → TODO */}
+        {/* UI-2 → R1, R10, R12, R13 */}
         <View style={styles.menu}>
           {SCREENS.map((item) => (
             <BigButton
