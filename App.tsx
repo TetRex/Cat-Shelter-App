@@ -4,6 +4,8 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import BigButton from './components/BigButton';
 import RoleSwitcher from './components/RoleSwitcher';
 import { DEMO_USERS } from './data/demo';
+import { SHIFTS } from './data/shifts';
+import { signUp, takeSwap } from './logic/shifts';
 import CatsScreen from './screens/CatsScreen';
 import MyShiftsScreen from './screens/MyShiftsScreen';
 import ShiftListScreen from './screens/ShiftListScreen';
@@ -20,6 +22,8 @@ const SCREENS: { screen: Screen; label: string }[] = [
 export default function App() {
   const [currentUser, setCurrentUser] = useState(DEMO_USERS[0]);
   const [screen, setScreen] = useState<Screen>('shiftList');
+  // Changes are kept only in memory and reset on reload (no backend, rule 3)
+  const [shifts, setShifts] = useState(SHIFTS);
 
   return (
     <View style={styles.root}>
@@ -41,7 +45,14 @@ export default function App() {
         </View>
 
         <View style={styles.screen}>
-          {screen === 'shiftList' && <ShiftListScreen />}
+          {screen === 'shiftList' && (
+            <ShiftListScreen
+              shifts={shifts}
+              currentUser={currentUser}
+              onSignUp={(shiftId) => setShifts(signUp(shifts, shiftId, currentUser.id))}
+              onTakeSwap={(shiftId) => setShifts(takeSwap(shifts, shiftId, currentUser.id))}
+            />
+          )}
           {screen === 'myShifts' && <MyShiftsScreen />}
           {screen === 'cats' && <CatsScreen />}
         </View>

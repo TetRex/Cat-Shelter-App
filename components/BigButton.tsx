@@ -6,19 +6,32 @@ type Props = {
   accessibilityLabel: string;
   onPress: () => void;
   selected?: boolean;
+  disabled?: boolean; // the screen shows the reason in text next to the button
 };
 
 // A large button (at least 48×48 dp). A selected button shows a check mark in text, not only a colour.
-export default function BigButton({ label, accessibilityLabel, onPress, selected = false }: Props) {
+export default function BigButton({
+  label,
+  accessibilityLabel,
+  onPress,
+  selected = false,
+  disabled = false,
+}: Props) {
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
-      accessibilityState={{ selected }}
+      accessibilityState={{ selected, disabled }}
+      disabled={disabled}
       onPress={onPress}
-      style={({ pressed }) => [styles.button, selected && styles.selected, pressed && styles.pressed]}
+      style={({ pressed }) => [
+        styles.button,
+        selected && styles.selected,
+        disabled && styles.disabled,
+        pressed && styles.pressed,
+      ]}
     >
-      <Text style={[styles.label, selected && styles.selectedLabel]}>
+      <Text style={[styles.label, selected && styles.selectedLabel, disabled && styles.disabledLabel]}>
         {selected ? `✓ ${label}` : label}
       </Text>
     </Pressable>
@@ -40,6 +53,10 @@ const styles = StyleSheet.create({
   selected: {
     backgroundColor: colors.primary,
   },
+  disabled: {
+    borderColor: colors.border,
+    borderStyle: 'dashed',
+  },
   pressed: {
     opacity: 0.7,
   },
@@ -50,5 +67,8 @@ const styles = StyleSheet.create({
   selectedLabel: {
     color: colors.onPrimary,
     fontWeight: 'bold',
+  },
+  disabledLabel: {
+    color: colors.border,
   },
 });
